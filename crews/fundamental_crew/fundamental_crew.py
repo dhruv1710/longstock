@@ -3,6 +3,8 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
 
+from tools.yfinance_tool import YFinanceTool
+from crewai_tools import SerperDevTool
 
 
 
@@ -27,14 +29,16 @@ class FundamentalCrew():
     def valuation_expert(self) -> Agent:
         return Agent(
             config=self.agents_config['valuation_expert'], 
-            verbose=True
+            verbose=True,
+            tools=[ SerperDevTool()]
         )
 
     @agent
     def growth_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['growth_analyst'], 
-            verbose=True
+            verbose=True,
+            tools=[SerperDevTool()]
         )
 
     @agent
@@ -61,11 +65,11 @@ class FundamentalCrew():
     
     
     
-    @task
-    def collect_financial_data_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['collect_financial_data_task'], 
-        )
+    # @task
+    # def collect_financial_data_task(self) -> Task:
+    #     return Task(
+    #         config=self.tasks_config['collect_financial_data_task'], 
+    #     )
     
     @task
     def analyze_financial_statements_task(self) -> Task:
@@ -93,15 +97,15 @@ class FundamentalCrew():
         )
 
     @task
-    def analyze_capital_allocation_task(self) -> Task:
+    def review_capital_allocation_task(self) -> Task:
         return Task(
-            config=self.tasks_config['analyze_capital_allocation_task'], 
+            config=self.tasks_config['review_capital_allocation_task'], 
         )
 
     @task
-    def synthesize_fundamentals_task(self) -> Task:
+    def synthesize_fundamental_analysis_task(self) -> Task:
         return Task(
-            config=self.tasks_config['synthesize_fundamentals_task'], 
+            config=self.tasks_config['synthesize_fundamental_analysis_task'], 
         )
 
     @crew
@@ -115,5 +119,5 @@ class FundamentalCrew():
             tasks=self.tasks, 
             process=Process.sequential,
             verbose=True,
-            
+            output_log_file='outputlogs.txt'
         )

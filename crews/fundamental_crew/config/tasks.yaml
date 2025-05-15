@@ -12,21 +12,16 @@ analyze_financial_statements_task:
     6. Red flags or accounting concerns
     
     Relevant financial data:
-    {collected_financial_data}
+    {financial_data}
   expected_output: >
     A comprehensive analysis of the company's financial statements with key metrics, trends,
     strengths, weaknesses, and potential red flags clearly identified. Include specific data
     points to support your conclusions.
   agent: financial_statement_analyst
-  context:
-    - collect_financial_data_task
 
 calculate_valuation_metrics_task:
   description: >
     Calculate and analyze valuation metrics for {ticker} ({company_name}).
-    
-    Current stock price: ${current_price}
-    Industry: {industry}
     
     Your analysis should include:
     1. Price-based multiples (P/E, P/S, P/B, P/FCF)
@@ -36,18 +31,15 @@ calculate_valuation_metrics_task:
     5. Dividend yield and payout ratio assessment (if applicable)
     6. Interpretation of current valuation relative to growth and quality
     
-    Financial data:
-    {collected_financial_data}
+   
     
-    Industry comparison data:
-    {industry_data}
+    Use the Serper search Tool on its industry peers to do a comparison.
   expected_output: >
     A detailed valuation analysis with calculated metrics, historical and peer comparisons,
     and an assessment of whether the current stock price represents fair value, overvaluation,
     or undervaluation. Include specific numerical support for your conclusions.
   agent: valuation_expert
   context:
-    - collect_financial_data_task
     - analyze_financial_statements_task
 
 assess_growth_potential_task:
@@ -62,22 +54,20 @@ assess_growth_potential_task:
     5. Challenges or headwinds to future growth
     6. Realistic growth projections for the next 3-5 years
     
-    Company information:
-    {company_info}
     
-    Financial data:
-    {collected_financial_data}
     
-    Industry trends:
-    {industry_trends}
+
+
+    
+    Search the industry trends of the company using the SearchTool
   expected_output: >
     A thorough assessment of the company's growth trajectory with quantified historical
     growth rates, detailed analysis of growth quality, and well-supported projections
     for future growth potential.
   agent: growth_analyst
   context:
-    - collect_financial_data_task
     - analyze_financial_statements_task
+    - calculate_valuation_metrics_task
 
 evaluate_competitive_position_task:
   description: >
@@ -92,24 +82,15 @@ evaluate_competitive_position_task:
     6. Barriers to entry protecting the business
     7. Vulnerability to disruption or technological change
     
-    Company information:
-    {company_info}
+  
     
-    Financial data:
-    {collected_financial_data}
     
-    Industry analysis:
-    {industry_analysis}
-    
-    Competitor data:
-    {competitor_data}
   expected_output: >
     A comprehensive evaluation of the company's competitive positioning with
     specific evidence of any sustainable advantages, vulnerabilities, and how
     these factors impact long-term business value.
   agent: competitive_advantage_assessor
   context:
-    - collect_financial_data_task
     - analyze_financial_statements_task
     - assess_growth_potential_task
 
@@ -126,21 +107,15 @@ review_capital_allocation_task:
     6. Debt management and capital structure decisions
     7. Overall assessment of management's capital allocation skill
     
-    Financial data:
-    {collected_financial_data}
+  
     
-    Management history:
-    {management_history}
     
-    Capital allocation actions:
-    {capital_allocation_data}
   expected_output: >
     A detailed analysis of management's capital allocation decisions with quantitative
     assessment of returns generated, effectiveness of various capital deployment strategies,
     and an overall rating of management's capital allocation capabilities.
   agent: capital_allocation_analyst
   context:
-    - collect_financial_data_task
     - analyze_financial_statements_task
     - assess_growth_potential_task
 
@@ -156,19 +131,13 @@ synthesize_fundamental_analysis_task:
     5. Provide a balanced view of risks and opportunities
     6. Formulate actionable conclusions for investment decision-making
     
-    Previous analyses:
-    - Financial Statement Analysis: {financial_statement_analysis}
-    - Valuation Assessment: {valuation_assessment}
-    - Growth Potential: {growth_potential_analysis}
-    - Competitive Position: {competitive_position_analysis}
-    - Capital Allocation Review: {capital_allocation_review}
+   
   expected_output: >
     A comprehensive synthesis of all fundamental analyses with clear priorities
     assigned to different factors, an overall fundamental quality rating,
     and specific actionable conclusions about the investment merits of the company.
   agent: fundamental_synthesis_agent
   context:
-    - collect_financial_data_task
     - analyze_financial_statements_task
     - calculate_valuation_metrics_task
     - assess_growth_potential_task
