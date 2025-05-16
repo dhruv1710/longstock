@@ -1,95 +1,67 @@
-# LongStock
+# Longstock: AI-Powered Stock Analysis Platform
 
-LongStock is an AI-powered fundamental and technical analysis tool for stock evaluation using CrewAI. It leverages a team of specialized AI agents to analyze financial data and provide comprehensive investment insights.
+Longstock is a Streamlit-based web application that provides AI-powered stock analysis using two major components:
 
-## Overview
+1. **Fundamental Analysis** - Evaluates company financials, business model, and growth prospects
+2. **Technical Analysis** - Analyzes price charts, trends, and patterns
 
-LongStock uses a flow-based approach where different AI agents' crews work together to analyze various aspects of a company's financial data and market position. Each agent specializes in a different area of fundamental analysis:
+## Features
 
-1. **Financial Data Collector** - Gathers comprehensive financial data for analysis
-2. **Financial Statement Analyst** - Analyzes balance sheets, income statements, and cash flow statements
-3. **Valuation Expert** - Calculates and interprets valuation metrics
-4. **Growth Analyst** - Evaluates historical growth patterns and future potential
-5. **Competitive Advantage Assessor** - Identifies competitive moats and market positioning
-6. **Capital Allocation Analyst** - Evaluates how effectively management allocates capital
-7. **Fundamental Synthesis Agent** - Integrates findings into a comprehensive assessment
-
-## Requirements
-
-- Python 3.12+
-- Dependencies as listed in pyproject.toml:
-  - crewai[tools] >= 0.119.0
-  - ruff >= 0.11.9
-- Additional dependencies:
-  - yfinance
-  - pandas
+- User-friendly interface for entering company details
+- Customizable time period and risk profile
+- Detailed fundamental analysis reports
+- Technical analysis with visual charts
+- Step-by-step workflow
 
 ## Installation
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/yourusername/longstock.git
 cd longstock
 
-# Create and activate virtual environment (optional)
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
 # Install dependencies
-pip install -e .
+pip install -r requirements.txt
 ```
 
 ## Usage
 
-To run a fundamental analysis:
+1. Run the Streamlit application:
 
 ```bash
-python main.py
+streamlit run app.py
 ```
 
-The application will prompt you for:
-- Company name
-- Time period for analysis (e.g., 5y)
-- Risk level (low, medium, high)
+2. Access the application in your browser (typically at http://localhost:8501)
 
-The output will be saved to a file named `fundamental_analysis.txt`.
+3. Enter a company name, select time period and risk level
+
+4. Review the fundamental analysis
+
+5. Proceed to technical analysis
+
+6. Start a new analysis if desired
 
 ## Project Structure
 
-```
-longstock/
-├── crews/
-│   ├── fundamental_crew/     # Fundamental analysis crew
-│   │   ├── config/
-│   │   │   ├── agents.yaml   # Agent configurations
-│   │   │   └── tasks.yaml    # Task definitions
-│   │   └── fundamental_crew.py
-│   └── poem_crew/            # Secondary crew
-├── tools/                    # Custom tools
-│   └── custom_tool.py        # Example custom tool
-├── main.py                   # Application entry point
-├── pyproject.toml            # Project dependencies
-└── README.md                 # This file
-```
+- `app.py` - Streamlit application frontend
+- `main.py` - CrewAI flow implementation
+- `crews/` - AI crews for different analysis types
+  - `fundamental_crew/` - AI crew for fundamental analysis
+  - `technical_crew/` - AI crew for technical analysis
+- `financial_data.py` - Financial data retrieval functions
+- `output/` - Generated analysis reports
 
-## How It Works
+## Requirements
 
-1. The system collects user input for the company to analyze
-2. The FundamentalCrew is initialized with specialized AI agents
-3. Each agent performs specific analysis tasks:
-   - Collecting financial data
-   - Analyzing financial statements
-   - Calculating valuation metrics
-   - Assessing growth potential
-   - Evaluating competitive position
-   - Analyzing capital allocation
-   - Synthesizing overall findings
-4. The results are compiled into a comprehensive fundamental analysis report
+- Python 3.8+
+- Streamlit
+- CrewAI
+- YFinance
+- Pandas
+- AgentOps
 
-## Extending the System
+## License
 
-To add new capabilities:
-- Add new agents to the crew by extending the FundamentalCrew class
-- Create custom tools in the tools directory
-- Configure agent behaviors and task definitions in the YAML configuration files
+MIT
 

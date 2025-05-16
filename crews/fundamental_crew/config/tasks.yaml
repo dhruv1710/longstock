@@ -18,6 +18,8 @@ analyze_financial_statements_task:
     strengths, weaknesses, and potential red flags clearly identified. Include specific data
     points to support your conclusions.
   agent: financial_statement_analyst
+  output_file: 'outputs/{company_name}/analyze_financial_statements_task.md'
+  create_directory: True
 
 calculate_valuation_metrics_task:
   description: >
@@ -41,6 +43,8 @@ calculate_valuation_metrics_task:
   agent: valuation_expert
   context:
     - analyze_financial_statements_task
+  output_file: 'outputs/{company_name}/calculate_valuation_metrics_task.md'
+  create_directory: True
 
 assess_growth_potential_task:
   description: >
@@ -68,6 +72,8 @@ assess_growth_potential_task:
   context:
     - analyze_financial_statements_task
     - calculate_valuation_metrics_task
+  output_file: 'outputs/{company_name}/assess_growth_potential_task.md'
+  create_directory: True
 
 evaluate_competitive_position_task:
   description: >
@@ -93,6 +99,8 @@ evaluate_competitive_position_task:
   context:
     - analyze_financial_statements_task
     - assess_growth_potential_task
+  output_file: 'outputs/{company_name}/evaluate_competitive_position_task.md'
+  create_directory: True
 
 review_capital_allocation_task:
   description: >
@@ -118,6 +126,8 @@ review_capital_allocation_task:
   context:
     - analyze_financial_statements_task
     - assess_growth_potential_task
+  output_file: 'outputs/{company_name}/review_capital_allocation_task.md'
+  create_directory: True
 
 synthesize_fundamental_analysis_task:
   description: >

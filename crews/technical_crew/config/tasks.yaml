@@ -1,0 +1,62 @@
+analyze_chart_task:
+  description: >
+    Visually analyze the uploaded 5-year price chart for {ticker}.
+    
+    Focus on:
+    1. Long-term trend direction (uptrend, downtrend, sideways)
+    2. Support and resistance levels
+    3. Moving average crossovers (e.g., 50/200 SMA)
+    4. RSI overbought/oversold zones
+    5. Notable chart patterns (e.g., double top/bottom, head and shoulders)
+    6. Momentum shifts or divergence
+
+    Input chart file: {chart_file}
+  expected_output: >
+    A visual technical analysis summary that clearly identifies market structure,
+    trend bias, key technical levels, and any patterns or signals that may
+    influence trading decisions.
+  agent: chart_analyzer
+  output_file: 'outputs/{company_name}/analyze_chart_task.md'
+  create_directory: True
+
+generate_trade_signal_task:
+  description: >
+    Interpret the chart analysis results and apply technical strategy rules to determine
+    a potential trade signal for {ticker}.
+    
+    Use:
+    1. RSI thresholds (e.g., over 70 = overbought, under 30 = oversold)
+    2. Moving average crossovers (bullish/bearish)
+    3. MACD behavior (if noted in chart analysis)
+    4. Pattern-based signals (breakouts, reversals)
+    
+    Your role is to generate a clear recommendation: Buy, Sell, or Hold.
+  expected_output: >
+    A definitive trade signal (Buy, Sell, or Hold) with supporting explanation tied to
+    specific technical rules and chart observations.
+  agent: technical_strategy_agent
+  context:
+    - analyze_chart_task
+  output_file: 'outputs/{company_name}/generate_trade_signal_task.md'
+  create_directory: True
+
+generate_technical_analysis_report_task:
+  description: >
+    Combine the insights from the chart analysis and trade signal evaluation to generate
+    a structured technical analysis report for {ticker}.
+    
+    The report should include:
+    1. Summary of technical observations
+    2. Final trade recommendation and rationale
+    3. Confidence level (Low, Medium, High)
+    4. Any cautions or alternative interpretations
+  expected_output: >
+    A concise, professional technical analysis report summarizing the visual interpretation,
+    strategy-based signal, and investment recommendation for the ticker. Include a clear bias
+    (bullish, bearish, neutral) and confidence level.
+  agent: report_generator
+  context:
+    - analyze_chart_task
+    - generate_trade_signal_task
+  output_file: 'outputs/{company_name}/generate_technical_analysis_report_task.md'
+  create_directory: True

@@ -18,8 +18,10 @@ class FundamentalCrew():
     
     
     
+    
     @agent
     def financial_statement_analyst(self) -> Agent:
+        
         return Agent(
             config=self.agents_config['financial_statement_analyst'], 
             verbose=True
@@ -73,33 +75,43 @@ class FundamentalCrew():
     
     @task
     def analyze_financial_statements_task(self) -> Task:
-        return Task(
+        
+        return Task(    
             config=self.tasks_config['analyze_financial_statements_task'], 
+            
+            
         )
 
     @task
     def calculate_valuation_metrics_task(self) -> Task:
         return Task(
             config=self.tasks_config['calculate_valuation_metrics_task'], 
-            output_file='report.md'
+            
+            
         )
 
     @task
     def assess_growth_potential_task(self) -> Task:
         return Task(
             config=self.tasks_config['assess_growth_potential_task'], 
+            
+            
         )
 
     @task
     def evaluate_competitive_position_task(self) -> Task:
         return Task(
             config=self.tasks_config['evaluate_competitive_position_task'], 
+            
+            
         )
 
     @task
     def review_capital_allocation_task(self) -> Task:
         return Task(
             config=self.tasks_config['review_capital_allocation_task'], 
+            
+            
         )
 
     @task
@@ -109,7 +121,7 @@ class FundamentalCrew():
         )
 
     @crew
-    def crew(self) -> Crew:
+    def crew(self, ) -> Crew:
         """Creates the FundamentalCrew crew"""
         
         

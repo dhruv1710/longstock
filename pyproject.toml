@@ -5,7 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "agentops>=0.4.12",
     "crewai[tools]>=0.119.0",
+    "matplotlib>=3.10.3",
     "ruff>=0.11.9",
+    "streamlit>=1.45.1",
     "yfinance>=0.2.61",
 ]

@@ -1,7 +1,8 @@
 import requests
 import yfinance as yf
 import pandas as pd
-
+# import pandas_ta as ta
+import matplotlib.pyplot as plt
 
 # Financial Statements
 def format_statement(df, title, num_years):
@@ -16,16 +17,25 @@ def format_statement(df, title, num_years):
     result = f"{title} (Last {cols} years):\n"
     result += df_subset.to_string(float_format="${:,.0f}".format)
     return result + "\n\n"
+
+def get_ticker(company_name):
+    """Get the ticker symbol for a company."""
+    api = "https://query2.finance.yahoo.com/v1/finance/search"
+    user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
+    params = {"q": company_name, "quotes_count": 1, "country": "United States"}
+
+    res = requests.get(url=api, params=params, headers={'User-Agent': user_agent})
+    data = res.json()
+
+    ticker_symbol = data['quotes'][0]['symbol']
+    return ticker_symbol
+
+
 def get_financial_data(ticker_symbol, num_years):
         """Fetch financial data from Yahoo Finance."""
-        api = "https://query2.finance.yahoo.com/v1/finance/search"
-        user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
-        params = {"q": ticker_symbol, "quotes_count": 1, "country": "United States"}
+        
 
-        res = requests.get(url=api, params=params, headers={'User-Agent': user_agent})
-        data = res.json()
-
-        ticker_symbol = data['quotes'][0]['symbol']
+        ticker_symbol = get_ticker(ticker_symbol)
         ticker = yf.Ticker(ticker_symbol)
         
         # Fetch data
@@ -91,3 +101,31 @@ def get_financial_data(ticker_symbol, num_years):
         output += format_statement(cashflow, "CASH FLOW STATEMENT", num_years)
         
         return output
+
+def chart_tool(company_name: str) -> str:
+        """This is a tool that will return a 5 year chart of the company's stock price"""
+        ticker =get_ticker(company_name)  # or any symbol like "SPY", "BTC-USD", etc.
+        data = yf.download(ticker, period="5y")
+
+        # Add technical indicators (optional)
+        # data["SMA200"] = ta.sma(data["Close"], length=200)
+        # data["RSI"] = ta.rsi(data["Close"], length=14)
+
+        # Plot
+        plt.figure(figsize=(14, 7))
+        plt.plot(data["Close"], label="Close Price", color="blue")
+        # plt.plot(data["SMA200"], label="SMA 200", color="orange", linestyle="--")
+        # plt.title(f"{ticker} - 5 Year Price Chart with SMA200")
+        plt.title(f"{ticker} - 5 Year Price Chart")
+        plt.xlabel("Date")
+        plt.ylabel("Price (USD)")
+        plt.legend()
+        plt.grid(True)
+        plt.tight_layout()
+
+        # Save chart as PNG
+        output_path = f"charts/{ticker}_5yr_chart.png"
+        plt.savefig(output_path)
+
+        print(f"Chart saved to {output_path}")  
+        return output_path
