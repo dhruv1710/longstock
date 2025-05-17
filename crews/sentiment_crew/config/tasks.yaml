@@ -1,14 +1,9 @@
-analyze_chart_task:
+get_sentiment_task:
   description: >
-    Visually analyze the uploaded 5-year price chart for {ticker}.
+    Get the sentiment of the company from the news and social media.
     
     Focus on:
     1. Long-term trend direction (uptrend, downtrend, sideways)
-    2. Support and resistance levels
-    3. Moving average crossovers (e.g., 50/200 SMA)
-    4. RSI overbought/oversold zones
-    5. Notable chart patterns (e.g., double top/bottom, head and shoulders)
-    6. Momentum shifts or divergence
 
     Input chart file: {chart_file}
   expected_output: >
@@ -58,3 +53,5 @@ generate_technical_analysis_report_task:
   context:
     - analyze_chart_task
     - generate_trade_signal_task
+  output_file: 'outputs/{company_name}/generate_technical_analysis_report_task.md'
+  create_directory: True
